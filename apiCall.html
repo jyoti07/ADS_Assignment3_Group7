@@ -1,0 +1,140 @@
+
+<html>
+  <head>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+   </head>
+  <script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    //$("a[rel^='prettyPhoto']").prettyPhoto();
+  });
+</script>
+  <body>
+  
+  
+  <div id="result">Results here</div>
+ 
+
+        <div class="pure-g">
+             <div class="pure-u-l">
+             <form id="myform" name="theform" class="group" action="javascript:getSuccessOutput()" method="POST">
+	<fieldset id="login" title="Information">
+		<legend>Login info</legend>
+		<span id="formerror" class="error"></span>
+		<ol>
+			
+			<li>
+				<label>Account</label>
+				<input type="number" name="account" id="account" >
+			</li>
+			<li>
+				<label>Channel</label>
+				<input type="text" name="channel" id="channel" />
+			</li>
+			<li>
+				<label>Date</label>
+				<input type="text" name="date" id="date" />
+			</li>
+			<li>
+				<label>Units<label>
+				<input type="text"  name="units" id="units" />
+			<li>
+			<label>Nth Minute</label>
+				<input type="number" name="nthMinute" id="nthMinute" />
+			</li>		
+						
+			<li>
+				<label>Value</label>
+				<input type="number" name="value" id="value"/>
+			</li>
+		</ol>
+	</fieldset>
+
+	
+
+
+	<fieldset id="submission"  class="hidden" title="">
+	
+		<button type="submit">Submit</button>
+	</fieldset>
+</form>
+           
+<script>
+"use strict";
+function getSuccessOutput() {
+alert("inside function");
+
+var account = $("#account").val();
+var channel = $("#channel").val();
+var date = $("#date").val();
+var units = $("#units").val();
+var nthMinute = $("#nthMinute").val();
+var value = $("#value").val();
+
+var test = {
+  "Inputs": {
+    "input1": {
+      "ColumnNames": [
+        "Account",
+        "Date",
+        "Channel",
+        "Units",
+        "nth minute",
+        "value"
+      ],
+      "Values": [
+        [
+          account,
+          date,
+          channel,
+          units,
+          nthMinute,
+          value
+        ],
+        [
+          "0",
+          "",
+          "value",
+          "value",
+          "0",
+          "0"
+        ]
+      ]
+    }
+  },
+  "GlobalParameters": {}
+};
+var jsonData = {account, channel, date, units, nthMinute, value};
+
+$.ajax({
+	type : "POST",  
+	dataType: "jsonp",
+	headers : {Authorization:'Bearer '+'rVr/tzhw64+S+fQs1xYZFUZWCCwjFvnhH+4WCGgRmITz1DkCbvVs1/A5cOytze4j4OQNKc5JFiCiNP2gjyry/g==','Content-Type':'application/json',},
+  url: 'https://ussouthcentral.services.azureml.net/workspaces/7a42d134b6c64c51b80b0f36259de4c0/services/8799f80617664c4c86130a5f882c402b/execute?api-version=2.0&details=true',
+  data : JSON.stringify(test),
+  success: function(result){
+  console.log(result);
+  debugger
+       // var data = result;
+		var output = result.Results.output1.value.Values[0];
+		var date = result.Results.output1.value.Values[0][1];
+		//console.log(result);
+		$("#result").html(output);
+		
+		//console.log(data.Results.output1.value.Values[0][1]);
+    }
+});
+}
+
+
+
+</script>
+  </div>
+             </div>
+             </body>
+    	<footer class="main-footer">
+		
+
+	</footer>
+	</div>
+        
+             
